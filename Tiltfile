@@ -1,0 +1,48 @@
+# namespace plugin
+load('ext://namespace', 'namespace_inject', 'namespace_create')
+
+namespace = "ecommerce"
+
+# registry = ""
+modules = [
+  {
+      "image_repo": "frontend",
+      "chart_repo": "frontend-chart",
+      "values":  "dev.values.yaml" ,
+  },
+]
+
+# create the namespace
+namespace_create(namespace)
+
+# deploy secrets first
+# k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
+
+
+# deploy mongodb and rabbitmq
+# k8s_yaml(namespace_inject(helm("./k8s/mongodb-charts/helm/", name="mongodb"), namespace ), allow_duplicates=False)
+# k8s_yaml(namespace_inject(helm("./k8s/rabbitmq-charts/helm/", name="rabbitmq"), namespace ), allow_duplicates=False)
+
+# for each module
+for m in modules:
+#   image_tag = registry + '/' + m["image_repo"] + '/main'
+  context = './' + m["image_repo"]
+  dockerfile = './' + m["image_repo"] + '/docker/Dockerfile.dev'
+  chart = 'k8s/' + m["chart_repo"] + '/helm/'
+  values = chart + m['values']
+
+#   build it
+  docker_build(
+  m["image_repo"], 
+  context,
+  dockerfile=dockerfile,
+  live_update=[
+    sync('./' + m["image_repo"], '/app')
+  ], 
+  extra_tag=["latest"])
+
+  # and deploy it with helm
+  k8s_yaml(namespace_inject(helm(chart, name=m["image_repo"], values=values), namespace), allow_duplicates=False)
+
+# create traefik last
+k8s_yaml(namespace_inject(helm("./k8s/traefik-chart/helm/", name="traefik", values='./k8s/traefik-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
