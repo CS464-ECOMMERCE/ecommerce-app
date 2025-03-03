@@ -1,3 +1,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/CS464-ECOMMERCE/frontend
+[submodule "backend"]
+	path = backend
+	url = https://github.com/CS464-ECOMMERCE/backend.git

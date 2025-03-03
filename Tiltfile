@@ -10,13 +10,18 @@ modules = [
       "chart_repo": "frontend-chart",
       "values":  "dev.values.yaml" ,
   },
+  {
+      "image_repo": "backend",
+      "chart_repo": "backend-chart",
+      "values":  "dev.values.yaml" ,
+  },
 ]
 
 # create the namespace
 namespace_create(namespace)
 
 # deploy secrets first
-# k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
+k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
 
 
 # deploy mongodb and rabbitmq

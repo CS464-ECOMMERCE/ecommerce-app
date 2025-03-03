@@ -942,6 +942,12 @@ extraObjects:
           - kind: Service
             name: frontend
             port: 3000
+        - kind: Rule
+          match: PathPrefix(`/api`)
+          services:
+          - kind: Service
+            name: backend
+            port: 8080
 
 
 # -- This field override the default Release Namespace for Helm.
