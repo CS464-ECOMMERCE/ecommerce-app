@@ -72,7 +72,7 @@ nameOverride: "postgresql"
 fullnameOverride: "postgresql"
 ## @param namespaceOverride String to fully override common.names.namespace
 ##
-namespaceOverride: "ecommerce"
+namespaceOverride: ""
 ## @param clusterDomain Kubernetes Cluster Domain
 ##
 clusterDomain: cluster.local
@@ -713,6 +713,7 @@ primary:
     ##
     type: ClusterIP
     ## @param primary.service.ports.postgresql PostgreSQL service port
+    portName: postgresql
     ##
     ports:
       postgresql: 5432
