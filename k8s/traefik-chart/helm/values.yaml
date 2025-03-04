@@ -614,7 +614,7 @@ envFrom: []
 
 ports:
   traefik:
-    port: 8080
+    port: 9000
     # -- Use hostPort if set.
     hostPort: # @schema type:[integer, null]; minimum:0
     # -- Use hostIP if set. If not set, Kubernetes will default to 0.0.0.0, which
@@ -632,7 +632,7 @@ ports:
     expose:
       default: false
     # -- The exposed port for this service
-    exposedPort: 8080
+    exposedPort: 9000
     # -- The port protocol (TCP/UDP)
     protocol: TCP
   web:
@@ -939,15 +939,15 @@ extraObjects:
           # middlewares:
           # - name: traefik-auth
           services:
-          - kind: Service
-            name: frontend
-            port: 3000
+            - kind: Service
+              name: frontend
+              port: 3000
         - kind: Rule
           match: PathPrefix(`/api`)
           services:
-          - kind: Service
-            name: backend
-            port: 8080
+            - kind: Service
+              name: backend
+              port: 8080
 
 # -- This field override the default Release Namespace for Helm.
 # It will not affect optional CRDs such as `ServiceMonitor` and `PrometheusRules`
