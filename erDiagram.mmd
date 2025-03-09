@@ -1,0 +1,50 @@
+ erDiagram
+        USER ||--o{ ORDER : places
+        USER {
+            int id PK "anon session uuid"
+            string email
+            string password_hash
+            string role
+        }
+
+        MERCHANT ||--o{ PRODUCT : sells
+        MERCHANT ||--|| USER : linked_to
+        MERCHANT {
+            int user_id PK, FK  
+            string business_name
+            string tax_id
+            boolean verified
+        }
+
+        %% PRODUCT ||--o{ REVIEW : reviewed_by
+        ORDER ||--|{ ORDERITEM : contains
+        PRODUCT {
+            int id PK
+            int merchant_id FK
+            %% int category_id FK
+            string name
+            float price
+            int inventory
+        }
+        
+        ORDER {
+            int id PK
+            int user_id FK
+            float total
+            string status
+            string transaction
+        }
+
+        ORDERITEM {
+            int order_id PK, FK
+            int product_id PK, FK
+            int quantity
+        }
+
+        PAYMENT ||--|| ORDER : associated_with
+        PAYMENT {
+            int order_id PK, FK
+            string transaction_id
+            string status
+            string gateway
+        }
