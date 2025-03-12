@@ -7,8 +7,8 @@
             string role
         }
 
-        MERCHANT ||--o{ PRODUCT : sells
-        MERCHANT ||--|| USER : linked_to
+        %% MERCHANT ||--o{ PRODUCT : sells
+        MERCHANT |o--|| USER : linked_to
         MERCHANT {
             int user_id PK, FK  
             string business_name
@@ -20,12 +20,13 @@
         ORDER ||--|{ ORDERITEM : contains
         PRODUCT {
             int id PK
-            int merchant_id FK
+            %% int merchant_id FK
             %% int category_id FK
             string name
             float price
             int inventory
             string description
+            string[] images
             string stripe_price_id
             string stripe_product_id
         }
