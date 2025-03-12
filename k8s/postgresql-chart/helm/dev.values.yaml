@@ -357,11 +357,77 @@ primary:
         echo "=========== INIT DB ==========="
 
       init.sql: |-
-        \c backend
-        CREATE TABLE products (
-          id serial PRIMARY KEY,
-          name  VARCHAR(255) NOT NULL
+        CREATE TYPE user_role AS ENUM ('admin', 'client');
+
+        CREATE TYPE order_status AS ENUM ('processing', 'cancelled', 'completed');
+
+        CREATE TYPE payment_status AS ENUM ('unpaid', 'paid', 'error');
+
+        CREATE TABLE product (
+          id SERIAL PRIMARY KEY,
+          name  VARCHAR(100) NOT NULL,
+          price NUMERIC(10,2) NOT NULL,
+          inventory INTEGER NOT NULL,
+          description TEXT,
+          images TEXT[],
+          stripe_price_id VARCHAR(255),
+          stripe_product_id VARCHAR(255)
         );
+
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          email VARCHAR(100) UNIQUE NOT NULL,
+          password_hash TEXT NOT NULL,
+          role user_role NOT NULL DEFAULT 'client'
+        );
+
+        CREATE TABLE order_table (
+          id SERIAL PRIMARY KEY,
+          user_id INT NOT NULL,
+          total NUMERIC(10,2) NOT NULL,
+          status order_status NOT NULL DEFAULT 'processing',
+          transaction TEXT,
+          CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+
+        CREATE TABLE merchant (
+          user_id INT PRIMARY KEY,
+          business_name VARCHAR(255) NOT NULL,
+          tax_id VARCHAR(255),
+          verified BOOLEAN DEFAULT FALSE,
+          CONSTRAINT fk_merchant_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE payment (
+          order_id INT PRIMARY KEY,
+          transaction_id VARCHAR(255) NOT NULL,
+          status payment_status NOT NULL DEFAULT 'unpaid',
+          gateway TEXT,
+          CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES order_table(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE orderitem (
+          order_id INT NOT NULL,
+          product_id INT NOT NULL,
+          quantity INT NOT NULL,
+          CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES order_table(id),
+          CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(id),
+          CONSTRAINT pk_orderitem PRIMARY KEY (order_id, product_id)
+        );
+
+        INSERT INTO PRODUCT (
+          name,
+          price,
+          inventory,
+          description,
+          images,
+          stripe_price_id,
+          stripe_product_id
+        ) VALUES
+          ('Book', 1.23, 12, 'This is a book description', '{}', NULL, NULL),
+          ('Crayons', 5.5, 2, 'This is a crayon description', '{}', NULL, NULL),
+          ('Table', 200, 1, 'This is a table description', '{}', NULL, NULL),
+          ('Chair', 99.90, 10, '{}', NULL, NULL, NULL);
 
     ## @param primary.initdb.scriptsConfigMap ConfigMap with scripts to be run at first boot
     ## NOTE: This will override `primary.initdb.scripts`

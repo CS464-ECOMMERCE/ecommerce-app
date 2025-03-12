@@ -25,7 +25,7 @@ k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
 
 
 # deploy mongodb and rabbitmq
-k8s_yaml(namespace_inject(helm("./k8s/postgresql-chart/helm/", name="postgres"), namespace ), allow_duplicates=False)
+k8s_yaml(namespace_inject(helm("./k8s/postgresql-chart/helm/", name="postgres", values="./k8s/postgresql-chart/helm/dev.values.yaml"), namespace ), allow_duplicates=False)
 # k8s_yaml(namespace_inject(helm("./k8s/rabbitmq-charts/helm/", name="rabbitmq"), namespace ), allow_duplicates=False)
 
 # for each module
