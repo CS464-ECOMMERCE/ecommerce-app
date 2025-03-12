@@ -25,6 +25,9 @@
             string name
             float price
             int inventory
+            string description
+            string stripe_price_id
+            string stripe_product_id
         }
         
         ORDER {
@@ -35,6 +38,7 @@
             string transaction
         }
 
+        ORDERITEM }o--|| PRODUCT: contains
         ORDERITEM {
             int order_id PK, FK
             int product_id PK, FK
