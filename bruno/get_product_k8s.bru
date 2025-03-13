@@ -1,0 +1,17 @@
+meta {
+  name: get_product_k8s
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/product
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"abc"
+  }
+}

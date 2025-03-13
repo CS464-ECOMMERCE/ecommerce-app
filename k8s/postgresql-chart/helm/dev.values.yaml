@@ -789,7 +789,7 @@ primary:
   service:
     ## @param primary.service.type Kubernetes Service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param primary.service.ports.postgresql PostgreSQL service port
     portName: postgresql
     ##
