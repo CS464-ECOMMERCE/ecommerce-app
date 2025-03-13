@@ -15,6 +15,11 @@ modules = [
       "chart_repo": "backend-chart",
       "values":  "dev.values.yaml" ,
   },
+  {
+      "image_repo": "product",
+      "chart_repo": "product-chart",
+      "values":  "dev.values.yaml" ,
+  },
 ]
 
 # create the namespace
