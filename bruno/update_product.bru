@@ -1,0 +1,19 @@
+meta {
+  name: update_product
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/api/v1/product
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id":"41ae7464-7a4b-4c39-8b11-444bcbab63a8",
+    "name":"deg4",
+    "inventory":5
+  }
+}
