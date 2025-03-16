@@ -36,7 +36,7 @@ message Empty {}
 // -----------------Product service-----------------
 
 service ProductService {
-  rpc ListProducts(Empty) returns (ListProductsResponse) {}
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
   rpc GetProduct(GetProductRequest) returns (Product) {}
   rpc CreateProduct(CreateProductRequest) returns (Product) {}
   rpc DeleteProduct(DeleteProductRequest) returns (Empty) {}
@@ -86,6 +86,13 @@ message DeleteProductRequest {
   uint64 merchant_id = 2;
 }
 
-message ListProductsResponse { repeated Product products = 1; }
+message ListProductsResponse {
+  repeated Product products = 1;
+  uint64 cursor = 2;
+}
 
+message ListProductsRequest {
+  uint64 cursor = 1;
+  uint64 limit = 2;
+}
 message GetProductRequest { uint64 id = 1; }
