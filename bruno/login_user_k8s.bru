@@ -1,0 +1,34 @@
+meta {
+  name: login_user_k8s
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/user/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test@test.com",
+    "password": "testing"
+  }
+}
+
+script:post-response {
+  let data = res.getHeaders();
+  let cookies = data['set-cookie']; // Get the 'set-cookie' header array
+  
+  if (Array.isArray(cookies)) {
+      // Extract token from cookie string
+      let token = cookies[0].match(/token=([^;]+)/)?.[1]; // Extract token value
+      if (token) {
+          bru.setEnvVar("access_token", token);
+      }
+  } else {
+      console.error("Set-Cookie header is missing or invalid");
+  }
+  
+}

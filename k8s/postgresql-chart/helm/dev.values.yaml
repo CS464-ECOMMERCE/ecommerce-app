@@ -363,16 +363,6 @@ primary:
 
         CREATE TYPE payment_status AS ENUM ('unpaid', 'paid', 'error');
 
-        CREATE TABLE product (
-          id SERIAL PRIMARY KEY,
-          name  VARCHAR(100) NOT NULL,
-          price NUMERIC(10,2) NOT NULL,
-          inventory INTEGER NOT NULL,
-          description TEXT,
-          images TEXT[],
-          stripe_price_id VARCHAR(255),
-          stripe_product_id VARCHAR(255)
-        );
 
         CREATE TABLE users (
           id SERIAL PRIMARY KEY,
@@ -398,6 +388,18 @@ primary:
           CONSTRAINT fk_merchant_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         );
 
+        CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          merchant_id INT NOT NULL,
+          name  VARCHAR(100) NOT NULL,
+          price NUMERIC(10,2) NOT NULL,
+          inventory INTEGER NOT NULL,
+          description TEXT,
+          images TEXT,
+          stripe_price_id VARCHAR(255),
+          stripe_product_id VARCHAR(255)
+        );
+
         CREATE TABLE payment (
           order_id INT PRIMARY KEY,
           transaction_id VARCHAR(255) NOT NULL,
@@ -415,8 +417,9 @@ primary:
           CONSTRAINT pk_orderitem PRIMARY KEY (order_id, product_id)
         );
 
-        INSERT INTO PRODUCT (
+        INSERT INTO PRODUCTS (
           name,
+          merchant_id,
           price,
           inventory,
           description,
@@ -424,10 +427,10 @@ primary:
           stripe_price_id,
           stripe_product_id
         ) VALUES
-          ('Book', 1.23, 12, 'This is a book description', '{}', NULL, NULL),
-          ('Crayons', 5.5, 2, 'This is a crayon description', '{}', NULL, NULL),
-          ('Table', 200, 1, 'This is a table description', '{}', NULL, NULL),
-          ('Chair', 99.90, 10, '{}', NULL, NULL, NULL);
+          ('Book', 1, 1.23, 12, 'This is a book description', '', NULL, NULL),
+          ('Crayons', 1, 5.5, 2, 'This is a crayon description', '', NULL, NULL),
+          ('Table', 1, 200, 1, 'This is a table description', '', NULL, NULL),
+          ('Chair', 1, 99.90, 10, '', NULL, NULL, NULL);
 
     ## @param primary.initdb.scriptsConfigMap ConfigMap with scripts to be run at first boot
     ## NOTE: This will override `primary.initdb.scripts`
@@ -801,7 +804,7 @@ primary:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
     nodePorts:
-      postgresql: ""
+      postgresql: "32767"
     ## @param primary.service.clusterIP Static clusterIP or None for headless services
     ## e.g:
     ## clusterIP: None

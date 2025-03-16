@@ -1,0 +1,21 @@
+meta {
+  name: register_user_k8s
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/user/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test@test.com",
+    "password": "testing",
+    "role": "admin",
+    "business_name": "foodie",
+    "tax_id": "123456"
+  }
+}

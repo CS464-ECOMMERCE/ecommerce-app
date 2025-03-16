@@ -1,0 +1,19 @@
+meta {
+  name: update_product_k8s
+  type: http
+  seq: 10
+}
+
+patch {
+  url: {{base_url_k8}}/api/v1/product
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id":1,
+    "name":"deg3",
+    "inventory":5
+  }
+}
