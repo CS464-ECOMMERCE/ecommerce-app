@@ -371,7 +371,7 @@ primary:
           role user_role NOT NULL DEFAULT 'client'
         );
 
-        CREATE TABLE order_table (
+        CREATE TABLE orders (
           id SERIAL PRIMARY KEY,
           user_id INT NOT NULL,
           total NUMERIC(10,2) NOT NULL,
@@ -380,7 +380,7 @@ primary:
           CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
         );
 
-        CREATE TABLE merchant (
+        CREATE TABLE merchants (
           user_id INT PRIMARY KEY,
           business_name VARCHAR(255) NOT NULL,
           tax_id VARCHAR(255),
@@ -400,19 +400,19 @@ primary:
           stripe_product_id VARCHAR(255)
         );
 
-        CREATE TABLE payment (
+        CREATE TABLE payments (
           order_id INT PRIMARY KEY,
           transaction_id VARCHAR(255) NOT NULL,
           status payment_status NOT NULL DEFAULT 'unpaid',
           gateway TEXT,
-          CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES order_table(id) ON DELETE CASCADE
+          CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
         );
 
-        CREATE TABLE orderitem (
+        CREATE TABLE orderitems (
           order_id INT NOT NULL,
           product_id INT NOT NULL,
           quantity INT NOT NULL,
-          CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES order_table(id),
+          CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(id),
           CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(id),
           CONSTRAINT pk_orderitem PRIMARY KEY (order_id, product_id)
         );
