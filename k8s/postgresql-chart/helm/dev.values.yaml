@@ -357,7 +357,7 @@ primary:
         echo "=========== INIT DB ==========="
 
       init.sql: |-
-        CREATE TYPE user_role AS ENUM ('admin', 'client');
+        CREATE TYPE user_role AS ENUM ('admin', 'merchant', 'client');
 
         CREATE TYPE order_status AS ENUM ('processing', 'cancelled', 'completed');
 
@@ -417,7 +417,7 @@ primary:
           CONSTRAINT pk_orderitem PRIMARY KEY (order_id, product_id)
         );
 
-        INSERT INTO PRODUCTS (
+        INSERT INTO products (
           name,
           merchant_id,
           price,
