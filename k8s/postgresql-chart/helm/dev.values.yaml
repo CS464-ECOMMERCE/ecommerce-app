@@ -413,7 +413,7 @@ primary:
           product_id INT NOT NULL,
           quantity INT NOT NULL,
           CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(id),
-          CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(id),
+          CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES products(id),
           CONSTRAINT pk_orderitem PRIMARY KEY (order_id, product_id)
         );
 

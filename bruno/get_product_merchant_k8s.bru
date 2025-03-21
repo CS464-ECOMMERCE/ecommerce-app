@@ -1,0 +1,15 @@
+meta {
+  name: get_product_merchant_k8s
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base_url_k8}}/api/v1/product/merchant?limit=5
+  body: json
+  auth: none
+}
+
+params:query {
+  limit: 5
+}

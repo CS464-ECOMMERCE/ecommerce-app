@@ -1,34 +1,34 @@
 version: "3.3"
 
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: ./docker/Dockerfile
-    ports:
-      - 8081:8080
-    #   - 2345:2345 #delve debug normal
-    #   - 4000:4000 #delve debug tests
-    volumes:
-      - ./backend/secrets/testing.env:/app/secrets/.env
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: ./docker/Dockerfile
+  #   ports:
+  #     - 8081:8080
+  #   #   - 2345:2345 #delve debug normal
+  #   #   - 4000:4000 #delve debug tests
+  #   volumes:
+  #     - ./backend/secrets/testing.env:/app/secrets/.env
     
-    env_file: ./backend/secrets/testing.env
-    depends_on:
-      database:
-        condition: service_healthy
+  #   env_file: ./backend/secrets/testing.env
+  #   depends_on:
+  #     database:
+  #       condition: service_healthy
 
-  product:
-    build:
-      context: ./product
-      dockerfile: ./docker/Dockerfile
-    # ports:
-      # - 8082:8080
-    volumes:
-      - ./product/secrets/testing.env:/app/secrets/.env
-    env_file: ./product/secrets/testing.env
-    depends_on:
-      database:
-        condition: service_healthy
+  # product:
+  #   build:
+  #     context: ./product
+  #     dockerfile: ./docker/Dockerfile
+  #   # ports:
+  #     # - 8082:8080
+  #   volumes:
+  #     - ./product/secrets/testing.env:/app/secrets/.env
+  #   env_file: ./product/secrets/testing.env
+  #   depends_on:
+  #     database:
+  #       condition: service_healthy
 
   database:
     image: postgres:14.1-alpine

@@ -5,8 +5,8 @@ meta {
 }
 
 post {
-  url: {{base_url_k8}}/api/v1/product/upload
-  body: json
+  url: {{base_url_k8}}/api/v1/product/upload/2
+  body: multipartForm
   auth: none
 }
 
@@ -14,4 +14,8 @@ body:json {
   {
     "id": 3
   }
+}
+
+body:multipart-form {
+  images: @file(/Users/jingkaiooi/Downloads/test.jpeg|/Users/jingkaiooi/Downloads/A2.png)
 }

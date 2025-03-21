@@ -1,3 +1,4 @@
+
 syntax = "proto3";
 
 package ecommerce;
@@ -41,7 +42,7 @@ service ProductService {
   rpc CreateProduct(CreateProductRequest) returns (Product) {}
   rpc DeleteProduct(DeleteProductRequest) returns (Empty) {}
   rpc UpdateProduct(UpdateProductRequest) returns (Product) {}
-  rpc UpdateProductImages(UpdateProductImagesRequest)
+  rpc UpdateProductImages(stream UpdateProductImagesRequest)
       returns (UpdateProductImagesResponse) {}
 }
 
@@ -51,15 +52,20 @@ message Product {
   float price = 3;
   uint64 inventory = 4;
   string description = 5;
-  string images = 6; // [bucketname]
+  // @gotags: gorm:"type:varchar(255)[]"
+  repeated string images = 6; // [bucketname]
   string stripe_price_id = 7;
   string stripe_product_id = 8;
   uint64 merchant_id = 9;
 }
 
-message UpdateProductImagesRequest { uint64 id = 1; }
+message UpdateProductImagesRequest {
+  bytes image_data = 1;
+  string filename = 2;
+  uint64 id = 3;
+}
 
-message UpdateProductImagesResponse { string presigned_url = 1; }
+message UpdateProductImagesResponse { repeated string uploaded_files = 1; }
 
 message CreateProductRequest {
   string name = 1;
@@ -95,5 +101,6 @@ message ListProductsResponse {
 message ListProductsRequest {
   uint64 cursor = 1;
   uint64 limit = 2;
+  uint64 merchant_id = 3;
 }
 message GetProductRequest { uint64 id = 1; }
