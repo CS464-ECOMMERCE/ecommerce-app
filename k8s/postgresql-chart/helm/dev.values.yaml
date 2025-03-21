@@ -395,7 +395,7 @@ primary:
           price NUMERIC(10,2) NOT NULL,
           inventory INTEGER NOT NULL,
           description TEXT,
-          images TEXT,
+          images TEXT[],
           stripe_price_id VARCHAR(255),
           stripe_product_id VARCHAR(255)
         );
@@ -427,9 +427,9 @@ primary:
           stripe_price_id,
           stripe_product_id
         ) VALUES
-          ('Book', 1, 1.23, 12, 'This is a book description', '', NULL, NULL),
-          ('Crayons', 1, 5.5, 2, 'This is a crayon description', '', NULL, NULL),
-          ('Table', 1, 200, 1, 'This is a table description', '', NULL, NULL),
+          ('Book', 1, 1.23, 12, 'This is a book description', NULL, NULL, NULL),
+          ('Crayons', 1, 5.5, 2, 'This is a crayon description', NULL, NULL, NULL),
+          ('Table', 1, 200, 1, 'This is a table description', NULL, NULL, NULL),
           ('Chair', 1, 99.90, 10, '', NULL, NULL, NULL);
 
     ## @param primary.initdb.scriptsConfigMap ConfigMap with scripts to be run at first boot
