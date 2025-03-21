@@ -89,6 +89,7 @@ message DeleteProductRequest {
 message ListProductsResponse {
   repeated Product products = 1;
   uint64 cursor = 2;
+  uint64 total = 3;
 }
 
 message ListProductsRequest {

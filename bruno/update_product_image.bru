@@ -1,0 +1,17 @@
+meta {
+  name: update_product_image
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/product/upload
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 3
+  }
+}

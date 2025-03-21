@@ -40,7 +40,7 @@ erDiagram
             float price
             int inventory
             string description
-            string[] images
+            string images "; object location delimited"
             string stripe_price_id
             string stripe_product_id
         }

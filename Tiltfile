@@ -1,6 +1,9 @@
 # namespace plugin
 load('ext://namespace', 'namespace_inject', 'namespace_create')
 
+# helm plugin
+# load('ext://helm_resource', 'helm_resource', 'helm_repo')
+
 namespace = "ecommerce"
 
 # registry = ""
@@ -53,6 +56,10 @@ for m in modules:
 
   # and deploy it with helm
   k8s_yaml(namespace_inject(helm(chart, name=m["image_repo"], values=values), namespace), allow_duplicates=False)
+
+# create s3
+# helm_repo('minio-operator', 'https://operator.min.io')
+# helm_resource('operator', 'minio-operator/minio-operator', resource_deps=['minio-operator'])
 
 # create traefik last
 k8s_yaml(namespace_inject(helm("./k8s/traefik-chart/helm/", name="traefik", values='./k8s/traefik-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
