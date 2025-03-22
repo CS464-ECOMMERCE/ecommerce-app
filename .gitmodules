@@ -7,3 +7,6 @@
 [submodule "product"]
 	path = product
 	url = git@github.com:CS464-ECOMMERCE/product.git
+[submodule "k8s"]
+	path = k8s
+	url = git@github.com:CS464-ECOMMERCE/k8s.git
