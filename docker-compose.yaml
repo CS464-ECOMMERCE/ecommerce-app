@@ -51,11 +51,22 @@ services:
       - database
 
   
-  # redis:
-  #   image: "redis:alpine"
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass redis_password --maxmemory 100mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis_password", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 
 volumes:
   psql_data:
     # external: true
     # name: psql_data
+  redis_data:
