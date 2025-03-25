@@ -1,0 +1,18 @@
+meta {
+  name: update_item_quantity_k8s
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/cart/update
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "product_id": 2,
+    "quantity": 10
+  }
+}

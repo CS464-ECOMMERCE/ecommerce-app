@@ -1,0 +1,11 @@
+meta {
+  name: empty_cart_k8s
+  type: http
+  seq: 18
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/cart/empty
+  body: json
+  auth: none
+}

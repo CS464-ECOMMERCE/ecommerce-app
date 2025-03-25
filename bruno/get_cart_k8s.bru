@@ -1,0 +1,11 @@
+meta {
+  name: get_cart_k8s
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{base_url_k8}}/api/v1/cart
+  body: json
+  auth: none
+}

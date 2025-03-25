@@ -1,0 +1,17 @@
+meta {
+  name: remove_item_cart_k8s
+  type: http
+  seq: 16
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/cart/remove_item
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "product_id": 2
+  }
+}
