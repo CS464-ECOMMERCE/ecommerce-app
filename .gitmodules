@@ -1,30 +1,30 @@
 [submodule "frontend"]
 	path = frontend
-	url = https://github.com/CS464-ECOMMERCE/frontend
+	url = git@github.com:CS464-ECOMMERCE/frontend.git
 [submodule "backend"]
 	path = backend
-	url = https://github.com/CS464-ECOMMERCE/backend.git
+	url = git@github.com:CS464-ECOMMERCE/backend.git
 [submodule "product"]
 	path = product
 	url = git@github.com:CS464-ECOMMERCE/product.git
 [submodule "cart"]
 	path = cart
-	url = https://github.com/CS464-ECOMMERCE/cart.git
+	url = git@github.com:CS464-ECOMMERCE/cart.git
 [submodule "k8s/backend-chart"]
 	path = k8s/backend-chart
 	url = git@github.com:CS464-ECOMMERCE/backend-chart.git
 [submodule "k8s/product-chart"]
-	path = k8s/backend-chart
+	path = k8s/product-chart
 	url = git@github.com:CS464-ECOMMERCE/product-chart.git
 [submodule "k8s/postgresql-chart"]
-	path = k8s/backend-chart
+	path = k8s/postgresql-chart
 	url = git@github.com:CS464-ECOMMERCE/postgresql-chart.git
 [submodule "k8s/traefik-chart"]
-	path = k8s/backend-chart
+	path = k8s/traefik-chart
 	url = git@github.com:CS464-ECOMMERCE/traefik-chart.git
 [submodule "k8s/cart-chart"]
-	path = k8s/backend-chart
+	path = k8s/cart-chart
 	url = git@github.com:CS464-ECOMMERCE/cart-chart.git
 [submodule "k8s/redis-chart"]
-	path = k8s/backend-chart
+	path = k8s/redis-chart
 	url = git@github.com:CS464-ECOMMERCE/redis-chart.git
