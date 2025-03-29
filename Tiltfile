@@ -6,13 +6,7 @@ load('ext://namespace', 'namespace_inject', 'namespace_create')
 
 namespace = "ecommerce"
 
-# registry = ""
 modules = [
-  {
-      "image_repo": "frontend",
-      "chart_repo": "frontend-chart",
-      "values":  "dev.values.yaml" ,
-  },
   {
       "image_repo": "backend",
       "chart_repo": "backend-chart",
