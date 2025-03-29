@@ -16,7 +16,7 @@ service CartService {
 }
 
 message CartItem {
-  uint64 product_id = 1;
+  uint64 id = 1;
   uint64 quantity = 2;
 }
 
@@ -36,12 +36,12 @@ message Cart {
 
 message RemoveItemRequest {
   string session_id = 1;
-  uint64 product_id = 2;
+  uint64 id = 2;
 }
 
 message UpdateItemQuantityRequest {
   string session_id = 1;
-  uint64 product_id = 2;
+  uint64 id = 2;
   uint64 quantity = 3;
 }
 
