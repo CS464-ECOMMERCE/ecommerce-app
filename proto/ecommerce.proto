@@ -1,4 +1,3 @@
-
 syntax = "proto3";
 
 package ecommerce;
@@ -117,3 +116,68 @@ message ListProductsRequest {
   uint64 merchant_id = 3;
 }
 message GetProductRequest { uint64 id = 1; }
+
+// -----------------Order service-----------------
+
+service OrderService {
+  rpc PlaceOrder(PlaceOrderRequest) returns (Order) {}
+  rpc GetOrder(GetOrderRequest) returns (Order) {}
+  rpc GetOrdersByUser(GetOrdersByUserRequest) returns (GetOrdersResponse) {}
+  rpc GetOrdersByMerchant(GetOrdersByMerchantRequest) returns (GetOrdersResponse) {}
+  rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (Order) {}
+  rpc CancelOrder(CancelOrderRequest) returns (Order) {}
+  rpc DeleteOrder(DeleteOrderRequest) returns (Empty) {}
+}
+
+message OrderItem {
+  uint64 order_id = 1;
+  uint64 product_id = 2;
+  uint64 quantity = 3;
+  float price = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message Order {
+  uint64 id = 1;
+  uint64 user_id = 2;
+  float total = 3;
+  string status = 4;
+  repeated OrderItem order_items = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message PlaceOrderRequest {
+  string session_id = 1;
+  uint64 user_id = 2;
+}
+
+message GetOrderRequest {
+  uint64 id = 1;
+}
+
+message GetOrdersByUserRequest {
+  uint64 user_id = 1;
+}
+
+message GetOrdersByMerchantRequest {
+  uint64 merchant_id = 1;
+}
+
+message GetOrdersResponse {
+  repeated Order orders = 1;
+}
+
+message UpdateOrderStatusRequest {
+  uint64 id = 1;
+  string status = 2;
+}
+
+message CancelOrderRequest {
+  uint64 id = 1;
+}
+
+message DeleteOrderRequest {
+  uint64 id = 1;
+}

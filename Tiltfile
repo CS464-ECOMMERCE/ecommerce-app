@@ -20,7 +20,11 @@ modules = [
       "image_repo": "cart",
       "chart_repo": "cart-chart",
       "values":  "dev.values.yaml" ,
-  },
+  },{
+    "image_repo": "order",
+    "chart_repo": "order-chart",
+    "values":  "dev.values.yaml" ,
+  }
 ]
 
 # create the namespace
