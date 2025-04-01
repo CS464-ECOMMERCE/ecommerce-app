@@ -1,0 +1,17 @@
+meta {
+  name: get_user_orders_k8s
+  type: http
+  seq: 20
+}
+
+get {
+  url: {{base_url_k8}}/api/v1/order/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test@test1.com"
+  }
+}

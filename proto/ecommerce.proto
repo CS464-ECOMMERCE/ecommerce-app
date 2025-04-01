@@ -56,6 +56,8 @@ service ProductService {
   rpc UpdateProduct(UpdateProductRequest) returns (Product) {}
   rpc UpdateProductImages(stream UpdateProductImagesRequest)
       returns (UpdateProductImagesResponse) {}
+  rpc ValidateProductInventory(ValidateProductInventoryRequest)
+      returns (ValidateProductInventoryResponse) {}
 }
 
 message Product {
@@ -116,6 +118,15 @@ message ListProductsRequest {
   uint64 merchant_id = 3;
 }
 message GetProductRequest { uint64 id = 1; }
+
+message ValidateProductInventoryRequest {
+  uint64 product_id = 1;
+  uint64 quantity = 2;
+}
+
+message ValidateProductInventoryResponse {
+  bool valid = 1;
+}
 
 // -----------------Order service-----------------
 

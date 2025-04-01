@@ -1,0 +1,17 @@
+meta {
+  name: create_order_k8s
+  type: http
+  seq: 19
+}
+
+post {
+  url: {{base_url_k8}}/api/v1/order/create
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test@test1.com"
+  }
+}
