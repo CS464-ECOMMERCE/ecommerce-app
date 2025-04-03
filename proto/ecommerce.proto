@@ -58,6 +58,7 @@ service ProductService {
       returns (UpdateProductImagesResponse) {}
   rpc ValidateProductInventory(ValidateProductInventoryRequest)
       returns (ValidateProductInventoryResponse) {}
+  rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse) {}
 }
 
 message Product {
@@ -128,10 +129,19 @@ message ValidateProductInventoryResponse {
   bool valid = 1;
 }
 
+message PlaceOrderRequest {
+  string session_id = 1;
+  uint64 user_id = 2;
+  string user_email = 3;
+}
+
+message PlaceOrderResponse {
+  string checkout_url = 1;
+}
+
 // -----------------Order service-----------------
 
 service OrderService {
-  rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse) {}
   rpc GetOrder(GetOrderRequest) returns (Order) {}
   rpc GetOrdersByUser(GetOrdersByUserRequest) returns (GetOrdersResponse) {}
   rpc GetOrdersByMerchant(GetOrdersByMerchantRequest) returns (GetOrdersResponse) {}
@@ -149,24 +159,30 @@ message OrderItem {
   string updated_at = 6;
 }
 
+// Enum for OrderStatus
+enum OrderStatus {
+    ORDER_STATUS_PROCESSING = 0; // Default value
+    ORDER_STATUS_COMPLETED = 1;
+    ORDER_STATUS_CANCELLED = 2;
+}
+
+// Enum for PaymentStatus
+enum PaymentStatus {
+    PAYMENT_STATUS_PENDING = 0; // Default value
+    PAYMENT_STATUS_COMPLETED = 1;
+    PAYMENT_STATUS_CANCELLED = 2;
+}
+
 message Order {
   uint64 id = 1;
   uint64 user_id = 2;
   float total = 3;
-  string status = 4;
-  repeated OrderItem order_items = 5;
-  string created_at = 6;
-  string updated_at = 7;
-}
-
-message PlaceOrderRequest {
-  string session_id = 1;
-  uint64 user_id = 2;
-  string user_email = 3;
-}
-
-message PlaceOrderResponse {
-  string checkout_url = 1;
+  OrderStatus status = 4;
+  string transaction_id = 5;
+  PaymentStatus payment_status = 6;
+  repeated OrderItem order_items = 7;
+  string created_at = 8;
+  string updated_at = 9;
 }
 
 message GetOrderRequest {
