@@ -131,7 +131,7 @@ message ValidateProductInventoryResponse {
 // -----------------Order service-----------------
 
 service OrderService {
-  rpc PlaceOrder(PlaceOrderRequest) returns (Order) {}
+  rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse) {}
   rpc GetOrder(GetOrderRequest) returns (Order) {}
   rpc GetOrdersByUser(GetOrdersByUserRequest) returns (GetOrdersResponse) {}
   rpc GetOrdersByMerchant(GetOrdersByMerchantRequest) returns (GetOrdersResponse) {}
@@ -162,6 +162,11 @@ message Order {
 message PlaceOrderRequest {
   string session_id = 1;
   uint64 user_id = 2;
+  string user_email = 3;
+}
+
+message PlaceOrderResponse {
+  string checkout_url = 1;
 }
 
 message GetOrderRequest {
