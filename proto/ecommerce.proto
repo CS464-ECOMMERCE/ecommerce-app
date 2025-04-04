@@ -148,6 +148,7 @@ service OrderService {
   rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (Order) {}
   rpc CancelOrder(CancelOrderRequest) returns (Order) {}
   rpc DeleteOrder(DeleteOrderRequest) returns (Empty) {}
+  rpc UpdatePaymentStatus(UpdatePaymentStatusRequest) returns (Empty) {}
 }
 
 message OrderItem {
@@ -212,4 +213,9 @@ message CancelOrderRequest {
 
 message DeleteOrderRequest {
   uint64 id = 1;
+}
+
+message UpdatePaymentStatusRequest {
+  string event = 1;
+  uint64 orderId = 2;
 }
