@@ -180,10 +180,11 @@ message Order {
   float total = 3;
   OrderStatus status = 4;
   string transaction_id = 5;
-  PaymentStatus payment_status = 6;
-  repeated OrderItem order_items = 7;
-  string created_at = 8;
-  string updated_at = 9;
+  string checkout_session_id = 6;
+  PaymentStatus payment_status = 7;
+  repeated OrderItem order_items = 8;
+  string created_at = 9;
+  string updated_at = 10;
 }
 
 message GetOrderRequest {
