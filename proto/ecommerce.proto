@@ -147,7 +147,6 @@ service OrderService {
   rpc GetOrdersByMerchant(GetOrdersByMerchantRequest) returns (GetOrdersResponse) {}
   rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (Order) {}
   rpc CancelOrder(CancelOrderRequest) returns (Order) {}
-  rpc DeleteOrder(DeleteOrderRequest) returns (Empty) {}
   rpc UpdatePaymentStatus(UpdatePaymentStatusRequest) returns (Empty) {}
 }
 
@@ -156,8 +155,10 @@ message OrderItem {
   uint64 product_id = 2;
   uint64 quantity = 3;
   float price = 4;
-  string created_at = 5;
-  string updated_at = 6;
+  string product_name = 5;
+  string product_image = 6;
+  string created_at = 7;
+  string updated_at = 8;
 }
 
 message Order {
@@ -195,10 +196,6 @@ message UpdateOrderStatusRequest {
 }
 
 message CancelOrderRequest {
-  uint64 id = 1;
-}
-
-message DeleteOrderRequest {
   uint64 id = 1;
 }
 
