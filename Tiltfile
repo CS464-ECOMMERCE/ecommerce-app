@@ -33,12 +33,13 @@ namespace_create(namespace)
 # deploy secrets first
 k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
 
+chart_repo = "./k8s-chart"
 
 # deploy mongodb and rabbitmq
-k8s_yaml(namespace_inject(helm("./k8s/postgresql-chart/helm/", name="postgres", values="./k8s/postgresql-chart/helm/dev.values.yaml"), namespace ), allow_duplicates=False)
+k8s_yaml(namespace_inject(helm(chart_repo + "/postgresql-chart/helm/", name="postgres", values=chart_repo + "/postgresql-chart/helm/dev.values.yaml"), namespace), allow_duplicates=False)
 
 # create redis
-k8s_yaml(namespace_inject(helm("./k8s/redis-chart/helm/", name="redis", values='./k8s/redis-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
+k8s_yaml(namespace_inject(helm(chart_repo + "/redis-chart/helm/", name="redis", values=chart_repo + '/redis-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
 # k8s_yaml(namespace_inject(helm("./k8s/rabbitmq-charts/helm/", name="rabbitmq"), namespace ), allow_duplicates=False)
 
 # for each module
@@ -46,7 +47,7 @@ for m in modules:
 #   image_tag = registry + '/' + m["image_repo"] + '/main'
   context = './' + m["image_repo"]
   dockerfile = './' + m["image_repo"] + '/docker/Dockerfile.dev'
-  chart = 'k8s/' + m["chart_repo"] + '/helm/'
+  chart = 'k8s-chart/' + m["chart_repo"] + '/helm/'
   values = chart + m['values']
 
 #   build it
@@ -69,4 +70,4 @@ for m in modules:
 
 
 # create traefik last
-k8s_yaml(namespace_inject(helm("./k8s/traefik-chart/helm/", name="traefik", values='./k8s/traefik-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
+k8s_yaml(namespace_inject(helm(chart_repo + "/traefik-chart/helm/", name="traefik", values=chart_repo + '/traefik-chart/helm/dev.values.yaml'), namespace), allow_duplicates=False)
