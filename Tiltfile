@@ -42,7 +42,7 @@ k8s_yaml(namespace_inject(helm(chart_repo + "/redis-chart/helm/", name="redis", 
 for m in modules:
   context = './' + m["image_repo"]
   dockerfile = './' + m["image_repo"] + '/docker/Dockerfile.dev'
-  chart = chart_repo + '/' + m["chart_repo"] + '/helm/'
+  chart = 'k8s/' + m["chart_repo"] + '/helm/'
   values = chart + m['values']
 
   # build docker image
