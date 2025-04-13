@@ -34,6 +34,3 @@
 [submodule "k8s/order-chart"]
 	path = k8s/order-chart
 	url = git@github.com:CS464-ECOMMERCE/order-chart.git
-[submodule "k8s-chart"]
-	path = k8s-chart
-	url = git@github.com:CS464-ECOMMERCE/k8s-chart.git
