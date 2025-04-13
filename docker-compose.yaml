@@ -7,12 +7,10 @@ services:
       dockerfile: ./docker/Dockerfile
     ports:
       - 8081:8080
-    #   - 2345:2345 #delve debug normal
-    #   - 4000:4000 #delve debug tests
     volumes:
-      - ./backend/secrets/testing.env:/app/secrets/.env
+      - ./testing.env:/app/secrets/.env
     
-    env_file: ./backend/secrets/testing.env
+    env_file: ./testing.env
     depends_on:
       database:
         condition: service_healthy
@@ -21,11 +19,9 @@ services:
     build:
       context: ./product
       dockerfile: ./docker/Dockerfile
-    # ports:
-      # - 8082:8080
     volumes:
-      - ./product/secrets/testing.env:/app/secrets/.env
-    env_file: ./product/secrets/testing.env
+      - ./testing.env:/app/secrets/.env
+    env_file: ./testing.env
     depends_on:
       database:
         condition: service_healthy
@@ -34,10 +30,8 @@ services:
     build:
       context: ./cart
       dockerfile: ./docker/Dockerfile
-    ports:
-      - "50051:50051" 
     volumes:
-       - ./cart/secrets/testing.env:/app/secrets/.env
+       - ./testing.env:/app/secrets/.env
     environment:
       - REDIS_ADDR=redis:6379
       - REDIS_PASSWORD=redis_password
@@ -47,6 +41,16 @@ services:
       - HTTP_PORT=8080
     depends_on:
       redis:
+        condition: service_healthy
+
+  order:
+    build:
+      context: ./order
+      dockerfile: ./docker/Dockerfile
+    volumes:
+       - ./testing.env:/app/secrets/.env
+    depends_on:
+      database:
         condition: service_healthy
 
   database:
@@ -62,12 +66,25 @@ services:
       retries: 5
     volumes:
       - psql_data:/var/lib/postgresql/data
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
   adminer:
     image: adminer
     ports:
       - 8080:8080
     depends_on:
       - database
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9090"
+    ports:
+      - "9000:9000"
+      - "9090:9090"
+    restart: always
+    volumes:
+      - ./minio/data:/data
+    environment:
+      - MINIO_ROOT_USER=minio
+      - MINIO_ROOT_PASSWORD=miniouser
 
   
   redis:

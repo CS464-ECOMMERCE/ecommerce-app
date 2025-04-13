@@ -10,6 +10,63 @@ git submodule foreach "git checkout main && git pull"
 ## do this to git pull for each submodule 
 ```
 
+
+
+## 🛠️ How to Run the Project Locally
+
+### Option 1: Run with Docker Compose
+
+#### ✅ Requirements
+- Install [Docker](https://www.docker.com/).
+- (Optional) Get your own [Stripe API keys](https://dashboard.stripe.com/apikeys) to create new products.
+
+#### 🔑 Add Stripe Keys
+Create a file named `testing.env` in the project root and add:
+```env
+STRIPE_SECRET_KEY=''
+NEXT_PUBLIC_STRIPE_KEY=''
+```
+> ⚠️ You can skip this if you just want to test without checkout and adding new products — some products are already added using:
+> - **Email:** `test@test.com`
+> - **Password:** `testing`
+
+#### ▶️ Start the Project
+```bash
+make run
+```
+
+#### ⏹️ Stop the Project
+Press `Ctrl + C`, then run:
+```bash
+make stop
+```
+
+---
+
+### Option 2: Run with Kubernetes (K8s)
+
+#### ✅ Requirements
+- For M1/M2 MacBooks:
+  - Install [OrbStack](https://orbstack.dev/) with:
+    ```bash
+    brew install --cask orbstack
+    ```
+  - Or install [Minikube](https://minikube.sigs.k8s.io/docs/)
+- Install [Tilt](https://docs.tilt.dev/)
+
+#### ▶️ Start the Project
+```bash
+tilt up
+```
+
+#### ⏹️ Stop the Project
+```bash
+tilt down
+```
+
+---
+
+
 # Architecture Diagram
 ![Architecture Diagram](architecture.png "Architecure of Ecommerce App")
 

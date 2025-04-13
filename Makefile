@@ -1,6 +1,6 @@
 # running
 run:
-	docker compose up -d
+	docker compose up -d && cd frontend && npm run dev
 
 run-build:
 	docker compose up --build -d
