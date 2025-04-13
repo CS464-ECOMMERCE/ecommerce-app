@@ -1,55 +1,55 @@
- erDiagram
-        USER ||--o{ ORDER : places
-        USER {
-            int id PK "anon session uuid"
-            string email
-            string password_hash
-            string role
-        }
+erDiagram
+    users ||--o{ orders : "places"
+    users ||--o| merchants : "operates"
+    merchants ||--o{ products : "sells"
+    orders ||--|{ order_items : "contains"
+    products ||--o{ order_items : "included_in"
 
-        %% MERCHANT ||--o{ PRODUCT : sells
-        MERCHANT |o--|| USER : linked_to
-        MERCHANT {
-            int user_id PK, FK  
-            string business_name
-            string tax_id
-            boolean verified
-        }
+    users {
+        int id PK
+        string email UK "Unique and non-null"
+        text password_hash
+        enum role "ENUM('admin', 'merchant', 'client')"
+    }
 
-        %% PRODUCT ||--o{ REVIEW : reviewed_by
-        ORDER ||--|{ ORDERITEM : contains
-        PRODUCT {
-            int id PK
-            %% int merchant_id FK
-            %% int category_id FK
-            string name
-            float price
-            int inventory
-            string description
-            string[] images
-            string stripe_price_id
-            string stripe_product_id
-        }
-        
-        ORDER {
-            int id PK
-            int user_id FK
-            float total
-            string status
-            string transaction
-        }
+    merchants {
+        int user_id PK,FK
+        string business_name
+        string tax_id
+        boolean verified
+    }
 
-        ORDERITEM }o--|| PRODUCT: contains
-        ORDERITEM {
-            int order_id PK, FK
-            int product_id PK, FK
-            int quantity
-        }
+    products {
+        int id PK
+        int merchant_id FK "References merchants(user_id)"
+        string name
+        float price
+        int inventory
+        text description
+        text[] images
+        string stripe_price_id
+        string stripe_product_id
+        boolean is_deleted "Defaults to FALSE"
+    }
 
-        PAYMENT ||--|| ORDER : associated_with
-        PAYMENT {
-            int order_id PK, FK
-            string transaction_id
-            string status
-            string gateway
-        }
+    orders {
+        int id PK
+        int user_id FK "References users(id)"
+        float total
+        enum status "ENUM('processing', 'cancelled', 'completed')"
+        string transaction_id
+        string checkout_session_id
+        enum payment_status "ENUM('pending', 'completed', 'cancelled')"
+        string address
+        timestamp created_at "Defaults to CURRENT_TIMESTAMP"
+        timestamp updated_at "Defaults to CURRENT_TIMESTAMP"
+    }
+
+    order_items {
+        int order_id PK,FK "References orders(id)"
+        int product_id PK,FK "References products(id)"
+        int quantity
+        float price
+        timestamp created_at "Defaults to CURRENT_TIMESTAMP"
+        timestamp updated_at "Defaults to CURRENT_TIMESTAMP"
+    }
