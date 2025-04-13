@@ -33,7 +33,7 @@ namespace_create(namespace)
 # deploy secrets first
 k8s_yaml(namespace_inject(read_file("./secrets.yml"), namespace))
 
-chart_repo = "./k8s-chart"
+chart_repo = "./k8s"
 
 # deploy mongodb and rabbitmq
 k8s_yaml(namespace_inject(helm(chart_repo + "/postgresql-chart/helm/", name="postgres", values=chart_repo + "/postgresql-chart/helm/dev.values.yaml"), namespace), allow_duplicates=False)
@@ -47,7 +47,7 @@ for m in modules:
 #   image_tag = registry + '/' + m["image_repo"] + '/main'
   context = './' + m["image_repo"]
   dockerfile = './' + m["image_repo"] + '/docker/Dockerfile.dev'
-  chart = 'k8s-chart/' + m["chart_repo"] + '/helm/'
+  chart = chart_repo + '/' + m["chart_repo"] + '/helm/'
   values = chart + m['values']
 
 #   build it
