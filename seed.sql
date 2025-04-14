@@ -20,6 +20,7 @@ CREATE TABLE orders (
     transaction_id VARCHAR(255) NOT NULL,
     checkout_session_id VARCHAR(255),
     payment_status payment_status NOT NULL DEFAULT 'pending',
+    address TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
