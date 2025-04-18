@@ -2,6 +2,11 @@
 
 An Ecommerce Application.
 
+## Repository
+
+- This is the [main repository](https://github.com/CS464-ECOMMERCE/ecommerce-app.git) that consists of multiple submodules from frontend, backend services, helm charts, and Terraform repository.
+- For the entire repository, please visit [organization repositories](https://github.com/orgs/CS464-ECOMMERCE/repositories).
+
 # Production
 
 - To see the production version of the app, visit [this website](https://cartshop.live) or enter the link `https://cartshop.live`.
