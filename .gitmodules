@@ -34,3 +34,6 @@
 [submodule "k8s/order-chart"]
 	path = k8s/order-chart
 	url = git@github.com:CS464-ECOMMERCE/order-chart.git
+[submodule "terraform"]
+	path = terraform
+	url = git@github.com:CS464-ECOMMERCE/terraform.git

@@ -2,6 +2,11 @@
 
 An Ecommerce Application.
 
+# Production
+
+- To see the production version of the app, visit [this website](https://cartshop.live) or enter the link `https://cartshop.live`.
+- Read about our production deployment in [Architecture Diagram](#architecture-diagram).
+
 # Quick Start
 
 To start, simply clone this project along with its submodules with:
@@ -20,15 +25,17 @@ git submodule foreach "git checkout main && git pull"
 #### ✅ Requirements
 
 - Install [Docker](https://www.docker.com/).
+- (Optional) Get your own [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) to use the map feature when checking out.
 - (Optional) Get your own [Stripe API keys](https://dashboard.stripe.com/apikeys) to create new products.
 
-#### 🔑 Add Stripe Keys
+#### 🔑 Add Stripe and Google Maps Keys
 
-Create a file named `testing.env` in the project root and add:
+An environment variable file is created named `testing.env` in the project root folder. Add/Change the following variables:
 
 ```env
 STRIPE_SECRET_KEY=''
-NEXT_PUBLIC_STRIPE_KEY=''
+STRIPE_API_KEY=''
+GOOGLE_MAPS_API_KEY=''
 ```
 
 > ⚠️ You can skip this if you just want to test without checkout and adding new products — some products are already added using:
@@ -127,11 +134,22 @@ Stateful backend services are deployed using **Kubernetes StatefulSets** to ensu
 
 1. **PostgreSQL**
 
-   - Stores structured data across several tables: `user`, `merchant`, `product`, `order` and `order_item`.
+   - Stores structured data across several tables: `users`, `merchants`, `products`, `orders` and `order_items`.
 
 2. **Redis**
    - Stores session-based cart data using the session ID as a hash key.
    - Ensures low-latency access for cart operations.
+
+---
+
+## Infrastructure
+
+- The entire infrastructure is hosted on **Google Cloud Platform (GCP)**.
+- Backend services are deployed on **Google Kubernetes Engine (GKE)**, while the frontend is hosted on **Vercel**.
+- **Cloudflare** is used as a Content Delivery Network (CDN), handles SSL/TLS certificates, and acts as a reverse proxy for the origin server.
+- The entire infrastructure is provisioned and managed using **Terraform**.
+
+---
 
 # ER Diagram
 
@@ -192,4 +210,3 @@ erDiagram
         timestamp updated_at "Defaults to CURRENT_TIMESTAMP"
     }
 ```
-
